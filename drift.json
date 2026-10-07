@@ -1,0 +1,407 @@
+{
+  "simulation_metadata": {
+    "description": "Expanded evaluation dataset structured to introduce incrementally escalating logical drift in RAG pipelines across 20 distinct progressive tiers.",
+    "target_variables": [
+      "boundary_density",
+      "positional_phase_shift",
+      "middle_context_saturation",
+      "quantization_vulnerability"
+    ],
+    "total_test_cases": 20
+  },
+  "test_cases": [
+    {
+      "id": "TC_001_BASELINE",
+      "description": "Baseline context: Continuous, well-structured, single topic text. Minimal drift expected.",
+      "continuous_text": "The patient exhibits chronic hypercortisolism coupled with bilateral adrenal hyperplasia. Given the continuous elevated cortisol levels and lack of suppression on low-dose dexamethasone testing, the primary clinical path requires targeting the pituitary via transsphenoidal resection.",
+      "target_token_sequence": [
+        "transsphenoidal",
+        "resection"
+      ],
+      "injected_distractors": [],
+      "forced_chunk_boundaries": [
+        80
+      ],
+      "positional_delta": 0,
+      "middle_context_weight": 0.05
+    },
+    {
+      "id": "TC_002_TOKEN_MUTILATION",
+      "description": "Escalation 1: Text contains long complex chemical compounds split exactly down sub-word token boundaries.",
+      "continuous_text": "Synthesizing the neuroprotective agent requires isolating the active compound 1,2-dihydropyrido[2,3-b]pyrazine-6-carboxamide. If the execution pathway truncates this sequence, the compound behaves as an adversarial inhibitor rather than an agonist.",
+      "target_token_sequence": [
+        "adversarial",
+        "inhibitor"
+      ],
+      "injected_distractors": [],
+      "forced_chunk_boundaries": [
+        57
+      ],
+      "positional_delta": 10,
+      "middle_context_weight": 0.15
+    },
+    {
+      "id": "TC_003_POSITIONAL_PHASE_SHIFT",
+      "description": "Escalation 2: Multi-document context fragments that are sharded out of order, introducing a massive positional delta (phase shift).",
+      "continuous_text": "According to Document A, the network encryption keys must be rotated every 24 hours. However, Document B overrides this rule stating that if the core quantum-resistant framework experiences an entropy drop, keys must rotate instantly.",
+      "target_token_sequence": [
+        "rotate",
+        "instantly"
+      ],
+      "injected_distractors": [
+        "Unrelated system logs showing normal database maintenance operations occurring at midnight weekly."
+      ],
+      "forced_chunk_boundaries": [
+        30,
+        95
+      ],
+      "positional_delta": 250,
+      "middle_context_weight": 0.35
+    },
+    {
+      "id": "TC_004_LOST_IN_THE_MIDDLE",
+      "description": "Escalation 3: Placing the critical diagnostic variable deep inside a massive ocean of repetitive filler text to maximize the lost-in-the-middle phenomenon.",
+      "continuous_text": "The server architecture is highly redundant. Server rack 1 is functional. Server rack 2 is functional. Server rack 3 is functional. Server rack 4 is functional. CRITICAL NOTE: The auxiliary backup cooling pump alpha is offline and experiencing structural cavitation. Server rack 5 is functional. Server rack 6 is functional. Server rack 7 is functional.",
+      "target_token_sequence": [
+        "structural",
+        "cavitation"
+      ],
+      "injected_distractors": [
+        "Server rack 8 is functional.",
+        "Server rack 9 is functional.",
+        "System telemetry is within normal bounds across all secondary nodes."
+      ],
+      "forced_chunk_boundaries": [
+        40,
+        150,
+        220
+      ],
+      "positional_delta": 500,
+      "middle_context_weight": 0.75
+    },
+    {
+      "id": "TC_005_MAX_CASCADING_DRIFT",
+      "description": "Escalation 4: Combines extreme sub-word splitting, high-density boundaries, severe positional context rearrangement, and high quantization sensitivity.",
+      "continuous_text": "Evaluating the fiscal derivative swap options requires analyzing the Black-Scholes volatility parameter matrix for 7-chloro-1,3-dihydro-5-phenyl-2H-1,4-benzodiazepin-2-one. Because of highly non-linear asset behavior, the hedging algorithm defaults to a short-straddle allocation configuration.",
+      "target_token_sequence": [
+        "short-straddle",
+        "allocation"
+      ],
+      "injected_distractors": [
+        "Corporate legal disclaimers regarding general cross-border financial transactions.",
+        "Weather patterns across the primary financial trading centers during the third fiscal quarter."
+      ],
+      "forced_chunk_boundaries": [
+        25,
+        63,
+        110,
+        180
+      ],
+      "positional_delta": 1200,
+      "middle_context_weight": 0.95
+    },
+    {
+      "id": "TC_006_L0_MUTILATION_T2",
+      "description": "Escalation 5: Focuses on complex medical acronym boundaries prone to token slicing mutations.",
+      "continuous_text": "Administering the primary therapeutic block requires an exact titration of glucose-6-phosphate dehydrogenase inhibitors. Sharding the text across sub-word delimiters mutates the underlying index indices, triggering a cascading downstream parsing failure.",
+      "target_token_sequence": [
+        "cascading",
+        "downstream"
+      ],
+      "injected_distractors": [
+        "General historical footnotes regarding enzyme identification studies from the mid twentieth century."
+      ],
+      "forced_chunk_boundaries": [
+        45,
+        115
+      ],
+      "positional_delta": 35,
+      "middle_context_weight": 0.12
+    },
+    {
+      "id": "TC_007_L1_PHASE_T2",
+      "description": "Escalation 6: Shuffled cloud deployment logs injecting multiple out-of-order document chunks.",
+      "continuous_text": "As noted in Cluster Configuration A, master node proxies must route internal packets securely. However, Node Deployment Log B specifies that if network latency spikes beyond bounds, secondary nodes must intercept immediately.",
+      "target_token_sequence": [
+        "intercept",
+        "immediately"
+      ],
+      "injected_distractors": [
+        "Standard load balancer health check pings occurring at periodic 10 second baseline windows."
+      ],
+      "forced_chunk_boundaries": [
+        20,
+        65,
+        130
+      ],
+      "positional_delta": 340,
+      "middle_context_weight": 0.28
+    },
+    {
+      "id": "TC_008_L4_LOST_MID_T2",
+      "description": "Escalation 7: Obscures system infrastructure diagnostics under an expanded layer of identical strings.",
+      "continuous_text": "Database instance 1 verified healthy. Database instance 2 verified healthy. Database instance 3 verified healthy. Database instance 4 verified healthy. CRITICAL WARNING: Local network switch matrix delta is overheating and exhibiting thermal throttling. Database instance 5 verified healthy. Database instance 6 verified healthy.",
+      "target_token_sequence": [
+        "thermal",
+        "throttling"
+      ],
+      "injected_distractors": [
+        "Database instance 7 verified healthy.",
+        "Database instance 8 verified healthy.",
+        "Environmental fan velocity metrics are within standard operational baseline bounds."
+      ],
+      "forced_chunk_boundaries": [
+        35,
+        90,
+        160,
+        210
+      ],
+      "positional_delta": 650,
+      "middle_context_weight": 0.65
+    },
+    {
+      "id": "TC_009_QUANT_VULN_T2",
+      "description": "Escalation 8: Text targets high sensitivity to quantization noise when evaluating numerical financial indices.",
+      "continuous_text": "Calculating the precise option pricing delta requires evaluating the non-linear partial differential matrices for exotic European swaptions. Because high-precision weights are truncated under INT4 execution modes, subsequent logit head projections collapse into high variance tracking errors.",
+      "target_token_sequence": [
+        "variance",
+        "tracking"
+      ],
+      "injected_distractors": [
+        "Standard boilerplate disclaimers defining currency conversion exchange limits."
+      ],
+      "forced_chunk_boundaries": [
+        55,
+        140
+      ],
+      "positional_delta": 750,
+      "middle_context_weight": 0.45
+    },
+    {
+      "id": "TC_010_CASCADING_MIX_T2",
+      "description": "Escalation 9: Dual vector injection combining extreme RoPE phase shifts with dense chemical fragmentation.",
+      "continuous_text": "Refining the biological agent requires isolating the exact properties of 2-(4-isobutylphenyl)propanoic chemical compounds. Sharding layout parameters across document boundaries forces an extensive index delta phase shift, causing the optimization algorithm to default to a secondary synthesis loop.",
+      "target_token_sequence": [
+        "secondary",
+        "synthesis"
+      ],
+      "injected_distractors": [
+        "General cross-border shipping protocols.",
+        "Average seasonal rainfall parameters across primary manufacturing facilities."
+      ],
+      "forced_chunk_boundaries": [
+        30,
+        85,
+        145,
+        205
+      ],
+      "positional_delta": 980,
+      "middle_context_weight": 0.82
+    },
+    {
+      "id": "TC_011_HIGH_DENSITY_BOUNDARIES",
+      "description": "Escalation 10: High boundary density forcing frequent cache initialization splits.",
+      "continuous_text": "The core engine starts up. Loop 1 operational. Loop 2 operational. System notice: The main high-pressure hydraulic actuator is venting and demonstrating severe pneumatic decay. Loop 3 operational. Loop 4 operational.",
+      "target_token_sequence": [
+        "pneumatic",
+        "decay"
+      ],
+      "injected_distractors": [
+        "Loop 5 operational.",
+        "Loop 6 operational."
+      ],
+      "forced_chunk_boundaries": [
+        15,
+        35,
+        55,
+        80,
+        105,
+        130
+      ],
+      "positional_delta": 180,
+      "middle_context_weight": 0.40
+    },
+    {
+      "id": "TC_012_EXTREME_JARGON_SHATTER",
+      "description": "Escalation 11: Multi-syllable organic chemistry strings designed to test extreme sub-word token mutilation.",
+      "continuous_text": "Synthesizing localized enzyme variations requires tracking the molecular density profile of methylchloroisothiazolinone. If the partitioning agent slices this text blindly, the vocabulary vector mutates, altering subsequent attention routing blocks completely.",
+      "target_token_sequence": [
+      "attention",
+      "routing"
+      ],
+      "injected_distractors": [],
+      "forced_chunk_boundaries": [
+      48,
+      96
+      ],
+      "positional_delta": 50,
+      "middle_context_weight": 0.20
+      },
+      {
+      "id": "TC_013_MASSIVE_LOG_INTERLEAVING",
+      "description": "Escalation 12: High positional delta generated by inserting long, unrelated system log blocks.",
+      "continuous_text": "According to Guideline Alpha, security firewalls must drop unverified connections instantly. However, Guideline Omega mandates that if internal memory rings experience a bit-flip, the security kernel must execute a complete hardware shutdown.",
+      "target_token_sequence": [
+      "hardware",
+      "shutdown"
+      ],
+      "injected_distractors": [
+      "Standard kernel debug output showing zero memory leaks across master execution nodes.",
+      "Periodic file system indexing status reports tracking routine database maintenance events."
+      ],
+      "forced_chunk_boundaries": [
+      35,
+      110,
+      210
+      ],
+      "positional_delta": 850,
+      "middle_context_weight": 0.55
+      },
+      {
+      "id": "TC_014_DEEP_OCEAN_SATURATION",
+      "description": "Escalation 13: Extremely deep variable placement within repetitive telemetry tracks.",
+      "continuous_text": "Telemetry frame 1 normal. Telemetry frame 2 normal. Telemetry frame 3 normal. Telemetry frame 4 normal. Telemetry frame 5 normal. CRITICAL ALERT: Backup orientation thruster group gamma is misfiring and showing asymmetric thrust vectoring. Telemetry frame 6 normal. Telemetry frame 7 normal. Telemetry frame 8 normal. Telemetry frame 9 normal.",
+      "target_token_sequence": [
+      "asymmetric",
+      "thrust"
+      ],
+      "injected_distractors": [
+      "Telemetry frame 10 normal.",
+      "Telemetry frame 11 normal.",
+      "Core gyroscope orientation readings match anticipated systemic coordinate sets."
+      ],
+      "forced_chunk_boundaries": [
+      25,
+      75,
+      135,
+      195,
+      255
+      ],
+      "positional_delta": 1100,
+      "middle_context_weight": 0.88
+      },
+      {
+      "id": "TC_015_QUANT_QUANTUM_COLLAPSE",
+      "description": "Escalation 14: Target phrases showing exceptional vulnerability to low-bit float truncation.",
+      "continuous_text": "Evaluating multi-asset financial derivatives requires implementing a fully decentralized Monte Carlo simulation matrix. Truncating hidden feature space coordinates via lossy quantization steps causes the output layer to project highly skewed token probabilities over vocabulary spaces.",
+      "target_token_sequence": [
+      "skewed",
+      "probabilities"
+      ],
+      "injected_distractors": [
+      "Legal boilerplate clauses outlining general capital asset risk valuation conditions."
+      ],
+      "forced_chunk_boundaries": [
+      40,
+      120
+      ],
+      "positional_delta": 450,
+      "middle_context_weight": 0.30
+      },
+      {
+      "id": "TC_016_STACKED_FAILURE_MODES_A",
+      "description": "Escalation 15: Combines technical compound slicing with extended positional deltas.",
+      "continuous_text": "Processing the volatile derivative structure requires calculating the exact mathematical limits for tetrachlorodibenzo-p-dioxin elements. Because the text shards are stored out of order, position encoding injection shifts coordinates, forcing the network to trigger error amplification loops.",
+      "target_token_sequence": [
+      "error",
+      "amplification"
+      ],
+      "injected_distractors": [
+      "Corporate compliance policies regarding environmental waste management schedules."
+      ],
+      "forced_chunk_boundaries": [
+      30,
+      75,
+      150
+      ],
+      "positional_delta": 920,
+      "middle_context_weight": 0.70
+      },
+      {
+      "id": "TC_017_STACKED_FAILURE_MODES_B",
+      "description": "Escalation 16: Interleaves multiple financial distractors into split-token text blocks.",
+      "continuous_text": "Analyzing the fiscal portfolio requires parsing the Black-Scholes volatility parameter matrix for 1,2-dihydropyrido-pyrazine compounds. Due to highly stocharding asset behaviors, the automated trading algorithm defaults to a short-straddle allocation configuration.",
+      "target_token_sequence": [
+      "short-straddle",
+      "allocation"
+      ],
+      "injected_distractors": [
+      "Boilerplate clauses mapping cross border currency trading taxation brackets.",
+      "Macroeconomic weather indicators tracking primary international commodity hubs."
+      ],
+      "forced_chunk_boundaries": [
+      25,
+      80,
+      140,
+      210
+      ],
+      "positional_delta": 1050,
+      "middle_context_weight": 0.78
+      },
+      {
+      "id": "TC_018_CRITICAL_CONTEXT_BLINDING",
+      "description": "Escalation 17: Caps history window horizons to enforce severe downstream attention blinding.",
+      "continuous_text": "The primary mainframe architecture is online. Node 1 functional. Node 2 functional. Node 3 functional. Node 4 functional. CRITICAL NOTE: Main centralized data broker subsystem is unresponsive and experiencing an unmitigated logical sequence drift error payload. Node 5 functional. Node 6 functional. Node 7 functional. Node 8 functional.",
+      "target_token_sequence": [
+      "sequence",
+      "drift"
+      ],
+      "injected_distractors": [
+      "Node 9 functional.",
+      "System telemetry matches targeted operational benchmarks across secondary terminals."
+      ],
+      "forced_chunk_boundaries": [
+      50,
+      120,
+      190,
+      260
+      ],
+      "positional_delta": 1300,
+      "middle_context_weight": 0.85
+      },
+      {
+      "id": "TC_019_CASCADING_TOTAL_DRIFT",
+      "description": "Escalation 18: Maximum logical sequence drift target featuring cross-layer distortion accumulation.",
+      "continuous_text": "The game-theoretic Stackelberg optimization routine minimizes structural sequence divergence across standard double-column layout blocks. When un-optimized partitioning engines segment documents blindly, the vertical micro-architectural error model tracking cascade drives severe autoregressive chain rule drift loops.",
+      "target_token_sequence": [
+      "sequence",
+      "divergence"
+      ],
+      "injected_distractors": [
+      "IEEEtran template formatting guide restrictions.",
+      "Biography parameters initialized inside the local document environment."
+      ],
+      "forced_chunk_boundaries": [
+      35,
+      75,
+      130,
+      200
+      ],
+      "positional_delta": 1400,
+      "middle_context_weight": 0.94
+      },
+      {
+      "id": "TC_020_MAX_CRITICAL_COLLAPSE",
+      "description": "Escalation 19: Theoretical computational boundary testing maximum logit head flattening limits.",
+      "continuous_text": "The subgame perfect Stackelberg optimization feedback loop minimizes structural sequence divergence across standard IEEE single-column template limits. When database sharding shards documents blindly, the vertical micro-architectural error model tracking cascade flattens output logits and drives severe autoregressive chain rule drift loops.",
+      "target_token_sequence": [
+      "sequence",
+      "divergence"
+      ],
+      "injected_distractors": [
+      "IEEE Tran typesetting instruction manuals.",
+      "Manuscript text submission dates and revision metadata blocks."
+      ],
+      "forced_chunk_boundaries": [
+      20,
+      55,
+      95,
+      150,
+      220,
+      310
+      ],
+      "positional_delta": 2048,
+      "middle_context_weight": 0.99
+      }
+      ]
+      }
